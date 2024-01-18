@@ -1,0 +1,44 @@
+<!-- templates/pages/index.html -->
+
+{% extends 'pages/base.html' %}
+
+{% block content %}
+
+    <a href='{% url 'pages:index' %}'><p>トップ</p></a>
+
+    <div>
+        <h4>カテゴリー</h4>
+        {% for category in category_list %}
+                 <a href="{% url 'pages:category' category %}">{{ category.name }}</a>
+        {% endfor %}
+    </div>
+
+    <!-- タグ用 -->
+    <div style='clear: both;'>
+        <h4>タグ</h4>
+        {% for tag in tag_list %}
+            <a href='{% url 'pages:tag' tag %}'>{{ tag.name }}</a>
+        {% endfor %}
+    </div>
+
+    <h1>一覧</h1><br>
+    <!-- contextの辞書から取得 -->
+    {% if category_key %}
+        <h3>カテゴリー：{{ category_key }}</h3>
+    {% elif tag_key %}
+        <h3>タグ: {{ tag_key }}</h3>
+    {% endif %}
+
+    {% for blog in blog_list %}
+        <ul>
+            <li>
+               {{ blog.created_at }}
+               {{ blog.title }}
+               <a href="{% url 'pages:detail' blog.pk %}">詳細</a>
+           </li>
+       </ul>
+    {% endfor %}
+
+    hello world
+
+{% endblock %}

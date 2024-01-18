@@ -1,0 +1,26 @@
+<!-- templates/blog/detail.html -->
+
+{% extends 'pages/base.html' %}
+
+{% block content %}
+
+    <h1>{{ blog.title }}</h1>
+    <p>{{ blog.updated_at }}</p>
+    {{ blog.text | safe | linebreaksbr }}<hr />
+    </br>
+
+    <a href="{% url 'pages:index' %}">トップページに戻る</a>
+
+    <!-- 関連記事の呼び出し -->
+    <h1>関連項目</h1>
+    {% if blog.relation.all %}
+        {% for blog in blog.relation.all %}
+            <a href='{% url 'pages:detail' blog.pk %}'>
+                <li>{{ blog }}</li>
+            </a>
+        {% endfor %}
+    {% else %}
+        <h2>ありません<h2>
+    {% endif %}
+
+{% endblock %}
